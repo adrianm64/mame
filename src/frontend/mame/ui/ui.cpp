@@ -317,7 +317,7 @@ void mame_ui_manager::display_startup_screens(bool first_time)
 		switch (state)
 		{
 			case 0:
-				if (show_warnings)
+				if (show_warnings && show_gameinfo)
 					messagebox_text = machine_info().warnings_string();
 				if (!messagebox_text.empty())
 				{
