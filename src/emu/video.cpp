@@ -96,6 +96,7 @@ video_manager::video_manager(running_machine &machine)
 	, m_throttle_rate(1.0f)
 	, m_fastforward(false)
 	, m_seconds_to_run(machine.options().seconds_to_run())
+	, m_seconds_to_skip(machine.options().seconds_to_skip())
 	, m_auto_frameskip(machine.options().auto_frameskip())
 	, m_speed(original_speed_setting())
 	, m_low_latency(machine.options().low_latency())
@@ -233,8 +234,16 @@ void video_manager::frame_update(bool from_debugger)
 	else
 		m_empty_skip_count = 0;
 
-	// if we're throttling, synchronize before rendering
 	attotime current_time = machine().time();
+
+	// revert to throttling after some time
+	if (m_seconds_to_skip > 0 && m_seconds_to_skip <= current_time.seconds())
+	{
+		m_seconds_to_skip = 0;
+		set_throttled(true);
+	}
+
+	// if we're throttling, synchronize before rendering
 	if (!from_debugger && phase > machine_phase::INIT && !m_low_latency && effective_throttle())
 		update_throttle(current_time);
 
@@ -293,7 +302,7 @@ std::string video_manager::speed_text()
 		str << "paused";
 
 	// if we're fast forwarding, just display Fast-forward
-	else if (m_fastforward)
+	else if (m_fastforward || m_seconds_to_skip > 0)
 		str << "fast ";
 
 	// if we're auto frameskipping, display that plus the level
@@ -551,7 +560,7 @@ void video_manager::postload()
 inline bool video_manager::effective_autoframeskip() const
 {
 	// if we're fast forwarding or paused, autoframeskip is disabled
-	if (m_fastforward || machine().paused())
+	if (m_fastforward  || m_seconds_to_skip > 0|| machine().paused())
 		return false;
 
 	// otherwise, it's up to the user
@@ -568,7 +577,7 @@ inline bool video_manager::effective_autoframeskip() const
 int video_manager::effective_frameskip() const
 {
 	// if we're fast forwarding, use the maximum frameskip
-	if (m_fastforward)
+	if (m_fastforward || m_seconds_to_skip > 0)
 		return FRAMESKIP_LEVELS - 1;
 
 	// otherwise, it's up to the user
@@ -589,7 +598,7 @@ inline bool video_manager::effective_throttle() const
 		return true;
 
 	// if we're fast forwarding, we don't throttle
-	if (m_fastforward)
+	if (m_fastforward || m_seconds_to_skip > 0)
 		return false;
 
 	// otherwise, it's up to the user

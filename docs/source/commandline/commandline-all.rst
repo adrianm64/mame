@@ -1892,6 +1892,14 @@ Core Performance Options
 
             mame pacman -seconds_to_run 60
 
+.. _mame-commandline-secondstoskip:
+
+**-seconds_to_skip** / **-sts** *<seconds>*
+
+    This option can be used to skip a fixed number of seconds at game start.
+    It tells MAME to run the emulation as fast as possible until the specified number of seconds has been emulated.
+    This can be used to speed up the start of games with long power on test sequences.
+
 .. _mame-commandline-nothrottle:
 
 **-[no]throttle**
