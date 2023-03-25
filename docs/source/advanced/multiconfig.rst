@@ -38,6 +38,10 @@ Order of Config Loading
    monitors or with other kinds of monitors will not load an INI file for this
    step.
 
+5a. Screen size INI files (for raster games only)
+   An ini file **[Width]X[Height][Orientation].INI** gets loded first and then an inifile **[Width]X[Height][Orientation]@[Refreshrate].INI** is loaded
+   For example **768X576H.INI** and **768X576H@50.INI** or **224X288V.INI** and **224X288V@60.INI**
+   
 6. Driver source file INI file.  MAME will attempt to load
    ``source/``\ *<sourcefile>*\ ``.ini`` where *<sourcefile>* is the base name
    of the source code file where the system driver is defined.  A system's
@@ -71,6 +75,8 @@ Examples of Config Loading Order
   3. (debugger not enabled, no extra INI file loaded)
   4. ``vertical.ini`` (screen orientation)
   5. ``raster.ini`` (monitor type)
+  5a. ``256x224H.ini`` (monitor resolution)
+  5b. ``256x224H@60.ini`` (monitor resolution and refreshrate)
   6. ``source/jack.ini`` (driver source file)
   7. (no BIOS set)
   8. ``zzyzzyxx.ini`` (parent system)
@@ -83,6 +89,8 @@ Examples of Config Loading Order
   3. (debugger not enabled, no extra INI file loaded)
   4. ``horizont.ini`` (screen orientation)
   5. ``raster.ini`` (monitor type)
+  5a. ``384x224H.ini`` (monitor resolution)
+  5b. ``384x224H@60.ini`` (monitor resolution and refreshrate)
   6. ``source/cps2.ini`` (driver source file)
   7. (no BIOS set)
   8. (no parent system)
@@ -95,6 +103,8 @@ Examples of Config Loading Order
   3. (debugger not enabled, no extra INI file loaded)
   4. ``horizont.ini`` (screen orientation)
   5. ``raster.ini`` (monitor type)
+  5a. ``352x224H.ini`` (monitor resolution)
+  5b. ``352x224H@60.ini`` (monitor resolution and refreshrate)
   6. ``source/stv.ini`` (driver source file)
   7. ``stvbios.ini`` (BIOS set)
   8. ``smleague.ini`` (parent system)
