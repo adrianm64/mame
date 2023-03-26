@@ -2269,7 +2269,7 @@ void ioport_manager::load_alias(config_type cfg_type, config_level cfg_level, ut
 			continue;
 		}
 
-        osd_printf_verbose("Use '%s' as alias for '%s'\n", alias, codename);
+		osd_printf_verbose("Use '%s' as alias for '%s'\n", alias, codename);
 		item->set_alias(alias);
 	}
 }
