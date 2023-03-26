@@ -984,6 +984,9 @@ private:
 	void save_default_inputs(util::xml::data_node &parentnode);
 	void save_game_inputs(util::xml::data_node &parentnode);
 
+	void load_alias(config_type cfg_type, config_level cfg_level, util::xml::data_node const *parentnode);
+	void save_alias(config_type cfg_type, util::xml::data_node *parentnode);
+
 	template<typename Type> Type playback_read(Type &result);
 	time_t playback_init();
 	void playback_end(const char *message = nullptr);

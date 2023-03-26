@@ -80,13 +80,15 @@ public:
 	input_device &device() const { return m_device; }
 	input_manager &manager() const;
 	running_machine &machine() const;
-	const std::string &name() const { return m_name; }
+	bool has_alias() const { return !m_alias.empty(); }
+	const std::string &name() const { return has_alias() ? m_alias : m_name; }
 	void *internal() const { return m_internal; }
 	input_item_id itemid() const { return m_itemid; }
 	input_item_class itemclass() const { return m_itemclass; }
 	input_code code() const;
 	const std::string &token() const { return m_token; }
 	s32 current() const { return m_current; }
+	void set_alias(const char* newname) { m_alias = newname; }
 
 	// helpers
 	s32 update_value();
@@ -112,6 +114,7 @@ protected:
 	// internal state
 	input_device &          m_device;               // reference to our owning device
 	std::string             m_name;                 // string name of item
+	std::string             m_alias;                // alias name for item
 	void *                  m_internal;             // internal callback pointer
 	input_item_id           m_itemid;               // originally specified item id
 	input_item_class        m_itemclass;            // class of the item

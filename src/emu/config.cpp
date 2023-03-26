@@ -72,13 +72,18 @@ bool configuration_manager::load_settings()
 	for (auto const &type : m_typelist)
 		type.second.load(config_type::INIT, config_level::DEFAULT, nullptr);
 
-	// now load the controller file
+	// now load the controller files
 	char const *const controller = machine().options().ctrlr();
 	if (controller && *controller)
 	{
 		emu_file file(machine().options().ctrlr_path(), OPEN_FLAG_READ);
-		if (!attempt_load(machine().system(), file, std::string(controller) + ".cfg", config_type::CONTROLLER))
-			throw emu_fatalerror("Could not load controller configuration file %s.cfg", controller);
+		path_iterator ctrlriter(controller);
+		std::string filename;
+		while (ctrlriter.next(filename))
+		{
+			if (!attempt_load(machine().system(), file, filename + ".cfg", config_type::CONTROLLER))
+				throw emu_fatalerror("Could not load controller configuration file %s.cfg", controller);
+		}
 	}
 
 	// next load the defaults file

@@ -13,3 +13,4 @@ Advanced configuration
     ctrlr_config
     devicemap
     linux-lightguns
+    controlleralias
