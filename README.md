@@ -1,22 +1,74 @@
 
 # **MAME** #
 
-[![Join the chat at https://gitter.im/mamedev/mame](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mamedev/mame?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This is a special build of MAME for my arcade cabinet
+* Generic Capcom Jamma with 25" 15KHz monitor
+* 2 joysticks
+* 2x6 buttons (Street Fighter layout)
+* Spinner
+* Dedicated start 1, start 2, pause, escape and coin buttons
+* JPac
 
-Continuous integration build status:
+## Changes
+I keep all changes in different branches.
+Makes it slightly easier to maintain for new releases (and I can use octopus merge :-)).
 
-| OS/Compiler                 | Status        |
-| --------------------------- |:-------------:|
-| Linux/clang and GCC         | ![CI (Linux)](https://github.com/mamedev/mame/workflows/CI%20(Linux)/badge.svg) |
-| Windows/MinGW GCC and clang | ![CI (Windows)](https://github.com/mamedev/mame/workflows/CI%20(Windows)/badge.svg) |
-| macOS/clang                 | ![CI (macOS)](https://github.com/mamedev/mame/workflows/CI%20(macOS)/badge.svg) |
-| UI Translations             | ![Compile UI translations](https://github.com/mamedev/mame/workflows/Compile%20UI%20translations/badge.svg) |
-| Documentation               | ![Build documentation](https://github.com/mamedev/mame/workflows/Build%20documentation/badge.svg) |
-| BGFX Shaders                | ![Rebuild BGFX shaders](https://github.com/mamedev/mame/workflows/Rebuild%20BGFX%20shaders/badge.svg) |
+    git pull GroovyMAME
+    git merge --ff-only groovymame0252
+    git merge --no-commit gmcontrolleralias gmresolutionini gmsecodstoskip gmhidewarnings
+    make REGENIE=1 NOWERROR=1 -j8
+    
+### [GroovyMame](https://github.com/antonioginer/GroovyMAME)
 
-Static analysis status for entire build (except for third-party parts of project):
+### Controller alias 
+This branch, __gmcontrolleralias__, makes it possible to create alias for inputs.
 
-[![Coverity Scan Status](https://scan.coverity.com/projects/5727/badge.svg?flat=1)](https://scan.coverity.com/projects/mame-emulator)
+A game input specified as **"KEY X"** or **"Press KEY ENTER to quit"** 
+doesn't help much in a cabinet where all you got is joysticks and differently colored buttons.
+
+Adding aliases in the controller file makes it more user friendly.
+The alias will be used everywhere in the MAME GUI. Configuration looks like this
+```´XML
+<alias code="KEYCODE_LCONTROL">Blue button</alias>
+<alias code="KEYCODE_X">Green button</alias>
+<alias code="MOUSECODE_XAXIS">Spinner</alias>
+```
+See the controlleralias documentation on how to use it.
+The `ctrlr` folder include an example file `jpac.cfg`
+
+The branch also allow configuration with several controller files separated with semicolon.
+
+    -ctrlr common;jpac;gamespecific  
+
+### Resolution based configuration
+This branch, __gmresolutionini__, adds parsing of screen resolution dependent ini-files for raster games.
+
+The ini-files parsed are `[Width]x[Height][Orientation].ini` and `[Width]x[Height][Orientation]@[Refreshrate]`.ini (refreshrate is rounded to nearest integer)
+e.g.
+Gauntlet will parse `336x240H.ini` and `336x240H@60.ini`
+Pacman will parse `288x224V.ini` and `288x224V@60.ini`
+
+It means I can keep video based options in separate files instead of using game specific ini-files.
+
+### Speed up game start
+This branch, __gmsecodstoskip__, adds an option to fast forward at startup.
+
+Some games, e.g. defender, has a lengthy power on test sequence.
+With this option it is possible to start the game without throttling and then automatically revert
+to normal speed after some time.
+The option is called `seconds_to_skip` with shortcut `sts` and is used like other configurations in ini-files or on command line like:
+
+    mame defender -seconds_to_skip 20
+
+### Hide warnings
+This branch, __gmhidewarnings__, links game warnings to the game information.
+
+i.e. it only shows game warnings at start if game information is displayed.
+
+`-skip_gameinfo` will skip warnings as well.
+
+---
+
 
 What is MAME?
 =============
