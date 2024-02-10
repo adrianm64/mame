@@ -66,12 +66,14 @@ void mame_options::parse_standard_inis(emu_options &options, std::ostream &error
 			{
 				parse_one_ini(options, "raster", OPTION_PRIORITY_SCREEN_INI, &error_stream);
 
-				// parse resolution based ({width}x{height}{orientation}@{refreshrate})
+				// parse resolution based {height}{orientation}, {width}x{height}{orientation}, {width}x{height}{orientation}@{refreshrate})
 				const rectangle &visarea = device.visible_area();
-				std::string sizename = string_format("%dx%d%s",
-				                                    visarea.width(), 
-				                                    visarea.height(),
-				                                    (cursystem->flags & ORIENTATION_SWAP_XY) ? "V" : "H");
+				std::string sizename = string_format("%d%s",
+				                                     visarea.height(),
+				                                     (cursystem->flags & ORIENTATION_SWAP_XY) ? "V" : "H");
+				parse_one_ini(options, sizename.c_str(), OPTION_PRIORITY_SCREEN_INI, &error_stream);
+                
+				sizename = string_format("%dx", visarea.width()) + sizename;
 				parse_one_ini(options, sizename.c_str(), OPTION_PRIORITY_SCREEN_INI, &error_stream);
 				
 				sizename += string_format("@%d", (int)(ATTOSECONDS_TO_HZ(device.frame_period().attoseconds()) + 0.5));
