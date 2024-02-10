@@ -39,10 +39,10 @@ Order of Config Loading
    step.
 
 5. Screen size INI files (for raster games only)
-   Ini files **[Height][Orientation].INI** **[Width]x[Height][Orientation].INI**,
-   **[Width]x[Height][Orientation]@[Refreshrate].INI**
-   For example **576H.INI**, **768X576H.INI** and **768X576H@50.INI** or 
-   **240V.INI**, **224X240V.INI** and **224X240V@60.INI**
+   Ini files **[Width]x[Orientation]**, **x[Height][Orientation].INI**, 
+   **[Width]x[Height][Orientation].INI**, **[Width]x[Height][Orientation]@[Refreshrate].INI**
+   For example **768xH.INI**, **x576H.INI**, **768x576H.INI** and **768x576H@50.INI** or 
+   **224xV.INI**, **x240V.INI**, **224x240V.INI** and **224x240V@60.INI**
    
    Arcade monitors often has a fixed number resolutions available.
    They also often has the same number of lines visible regardless of resolution
@@ -84,9 +84,10 @@ Examples of Config Loading Order
   3. (debugger not enabled, no extra INI file loaded)
   4. ``vertical.ini`` (screen orientation)
   5. ``raster.ini`` (monitor type)
-  5a. ``224H.ini`` (game resolution height)
-  5b. ``256x224H.ini`` (game resolution)
-  5c. ``256x224H@60.ini`` (game resolution and refreshrate)
+  5a. ``256xH.ini`` (game resolution width)
+  5b. ``x224H.ini`` (game resolution height)
+  5c. ``256x224H.ini`` (game resolution)
+  5d. ``256x224H@60.ini`` (game resolution and refreshrate)
   6. ``source/jack.ini`` (driver source file)
   7. (no BIOS set)
   8. ``zzyzzyxx.ini`` (parent system)
@@ -99,9 +100,10 @@ Examples of Config Loading Order
   3. (debugger not enabled, no extra INI file loaded)
   4. ``horizont.ini`` (screen orientation)
   5. ``raster.ini`` (monitor type)
-  5a. ``224H.ini`` (game resolution height)
-  5b. ``384x224H.ini`` (game resolution)
-  5c. ``384x224H@60.ini`` (game resolution and refreshrate)
+  5a. ``384xH.ini`` (game resolution width)
+  5b. ``x224H.ini`` (game resolution height)
+  5c. ``384x224H.ini`` (game resolution)
+  5d. ``384x224H@60.ini`` (game resolution and refreshrate)
   6. ``source/cps2.ini`` (driver source file)
   7. (no BIOS set)
   8. (no parent system)
@@ -114,9 +116,10 @@ Examples of Config Loading Order
   3. (debugger not enabled, no extra INI file loaded)
   4. ``horizont.ini`` (screen orientation)
   5. ``raster.ini`` (monitor type)
-  5a. ``224H.ini`` (game resolution height)
-  5b. ``352x224H.ini`` (game resolution)
-  5c. ``352x224H@60.ini`` (game resolution and refreshrate)
+  5a. ``352xH.ini`` (game resolution width)
+  5b. ``x224H.ini`` (game resolution height)
+  5c. ``352x224H.ini`` (game resolution)
+  5d. ``352x224H@60.ini`` (game resolution and refreshrate)
   6. ``source/stv.ini`` (driver source file)
   7. ``stvbios.ini`` (BIOS set)
   8. ``smleague.ini`` (parent system)

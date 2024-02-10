@@ -66,16 +66,20 @@ void mame_options::parse_standard_inis(emu_options &options, std::ostream &error
 			{
 				parse_one_ini(options, "raster", OPTION_PRIORITY_SCREEN_INI, &error_stream);
 
-				// parse resolution based {height}{orientation}, {width}x{height}{orientation}, {width}x{height}{orientation}@{refreshrate})
+				// parse resolution based {width}x{orientation}, x{height}{orientation}, {width}x{height}{orientation}, {width}x{height}{orientation}@{refreshrate})
 				const rectangle &visarea = device.visible_area();
-				std::string sizename = string_format("%d%s",
-				                                     visarea.height(),
-				                                     (cursystem->flags & ORIENTATION_SWAP_XY) ? "V" : "H");
+				const char orientation = (cursystem->flags & ORIENTATION_SWAP_XY) ? 'V' : 'H';
+
+				std::string sizename;
+				sizename = string_format("%dx%c", visarea.width(), orientation);
 				parse_one_ini(options, sizename.c_str(), OPTION_PRIORITY_SCREEN_INI, &error_stream);
-                
-				sizename = string_format("%dx", visarea.width()) + sizename;
+
+				sizename = string_format("x%d%c", visarea.height(), orientation);
 				parse_one_ini(options, sizename.c_str(), OPTION_PRIORITY_SCREEN_INI, &error_stream);
-				
+
+				sizename = string_format("%d", visarea.width()) + sizename;
+				parse_one_ini(options, sizename.c_str(), OPTION_PRIORITY_SCREEN_INI, &error_stream);
+
 				sizename += string_format("@%d", (int)(ATTOSECONDS_TO_HZ(device.frame_period().attoseconds()) + 0.5));
 				parse_one_ini(options, sizename.c_str(), OPTION_PRIORITY_SCREEN_INI, &error_stream);
 				break;
