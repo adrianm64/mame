@@ -14,7 +14,7 @@ I keep all changes in different branches.
 Makes it slightly easier to maintain for new releases (and I can use octopus merge :-)).
 
     git pull GroovyMAME
-    git merge --ff-only groovymame0252
+    git merge --ff-only groovymame0261
     git merge --no-commit gmcontrolleralias gmresolutionini gmsecodstoskip gmhidewarnings
     make REGENIE=1 NOWERROR=1 -j8
     
@@ -43,15 +43,15 @@ The branch also allow configuration with several controller files separated with
 ### Resolution based configuration
 This branch, __gmresolutionini__, adds parsing of screen resolution dependent ini-files for raster games.
 
-The ini-files parsed are `[Width]x[Height][Orientation].ini` and `[Width]x[Height][Orientation]@[Refreshrate]`.ini (refreshrate is rounded to nearest integer)
+The ini-files parsed are `[Width]x0[Orientation].ini`, `0x[Height][Orientation].ini`, `[Width]x[Height][Orientation].ini` and `[Width]x[Height][Orientation]@[Refreshrate]`.ini (refreshrate is rounded to nearest integer)
 e.g.
-Gauntlet will parse `336x240H.ini` and `336x240H@60.ini`
-Pacman will parse `288x224V.ini` and `288x224V@60.ini`
+Gauntlet will parse `336x0H.ini`, `0x240H.ini`, `336x240H.ini` and `336x240H@60.ini`
+Pacman will parse `288x0V.ini`, `0x224V.ini`, `288x224V.ini` and `288x224V@60.ini`
 
 It means I can keep video based options in separate files instead of using game specific ini-files.
 
 ### Speed up game start
-This branch, __gmsecodstoskip__, adds an option to fast forward at startup.
+This branch, __gmsecondstoskip__, adds an option to fast forward at startup.
 
 Some games, e.g. defender, has a lengthy power on test sequence.
 With this option it is possible to start the game without throttling and then automatically revert
