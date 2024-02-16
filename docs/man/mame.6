@@ -199,17 +199,19 @@ where \fIname\fR is your executable name, i.e. mame unless you changed it
 4. \fBvector.ini\fR, \fBvertical.ini\fR or \fBhorizont.ini\fR
 depending on monitor orientation
 .br
-5a. \fI[width]x[orientation]\fB.ini\fR
+5. \fBraster.ini\fR, for raster games
+.br
+5a. \fI[width]x0[orientation]\fB.ini\fR
 .br
 based on screen width and orientation for raster games only.
 .br
-e.g. 640xH.ini 
+e.g. 640x0H.ini 
 .br
-5b. \fIx[height][orientation]\fB.ini\fR
+5b. \fI0x[height][orientation]\fB.ini\fR
 .br
 based on screen height and orientation for raster games only.
 .br
-e.g. x480H.ini 
+e.g. 0x480H.ini 
 .br
 5c. \fI[width]x[height][orientation]\fB.ini\fR
 .br
