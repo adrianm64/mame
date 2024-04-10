@@ -13,11 +13,18 @@ This is a special build of MAME for my arcade cabinet
 I keep all changes in different branches.
 Makes it slightly easier to maintain for new releases (and I can use octopus merge :-)).
 
-    git pull GroovyMAME
-    git merge --ff-only groovymame0261
-    git merge --no-commit gmcontrolleralias gmresolutionini gmsecodstoskip gmhidewarnings
-    make REGENIE=1 NOWERROR=1 -j8
-    
+    git reset --hard
+    git rebase --onto mame0264 mame0263 gmcontrolleralias
+    git rebase --onto mame0264 mame0263 gmresolutionini
+    git rebase --onto mame0264 mame0263 gmsecondstoskip
+    git rebase --onto mame0264 mame0263 gmhidewarnings
+    git rebase --onto mame0264 mame0263 gmreadme
+    git checkout mame0264
+    git push --all --force
+    git merge --ff-only GroovyMAME/groovymame0264
+    git merge --no-commit gmcontrolleralias gmresolutionini gmsecondstoskip gmhidewarnings
+    make REGENIE=1 NOWERROR=1 -j9
+
 ### [GroovyMame](https://github.com/antonioginer/GroovyMAME)
 
 ### Controller alias 
